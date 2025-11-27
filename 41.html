@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy 41st Birthday — Mama</title>
+  <meta name="description" content="A personal, elegant one-page birthday website." />
+  <style>
+    :root{
+      --bg-1: #07070a;
+      --bg-2: #0f1114;
+      --panel: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.06);
+      --muted: #bfc4c8;
+      --accent: #c9a66b;
+      --accent-2: #9d8f7a;
+      --glass-blur: 14px;
+      --max-width: 1200px;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%; margin:0; padding:0;}
+    body{
+      background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: #eaecef;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .page{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:48px 24px;
+    }
+
+    .stage{
+      width:100%;
+      max-width:var(--max-width);
+      margin:0 auto;
+      position:relative;
+    }
+
+    .panel{
+      background:var(--panel);
+      border-radius:18px;
+      padding:34px;
+      backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      border:1px solid var(--glass-border);
+      box-shadow: 0 8px 30px rgba(3,6,12,0.6);
+      overflow:hidden;
+    }
+
+    .header{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+
+    .title{
+      font-size:32px;
+      font-weight:700;
+      letter-spacing:0.6px;
+      color: #f7f5f2;
+    }
+
+    .subtle-date{
+      color:var(--muted);
+      font-size:14px;
+      opacity:0.95;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 1.3fr; /* gallery column wider */
+      gap:30px;
+      align-items:start;
+    }
+
+    .copy{
+      padding-right:6px;
+    }
+
+    .lead{
+      color:#e7e4e2;
+      font-size:18px;
+      margin-bottom:18px;
+      font-weight:500;
+    }
+
+    .paragraph{
+      color:var(--muted);
+      font-size:16px;
+      margin-bottom:14px;
+    }
+
+    .closing{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-top:10px;
+      padding:18px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .closing .heart{
+      width:56px;height:56px;border-radius:10px;flex:0 0 56px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg, rgba(201,166,107,0.14), rgba(157,143,122,0.06));
+      border:1px solid rgba(201,166,107,0.12);
+      color:var(--accent);
+      font-weight:700;font-size:20px;
+      box-shadow: 0 3px 20px rgba(201,166,107,0.06) inset;
+    }
+
+    .closing .text{
+      color:#efecec;font-size:16px;font-weight:600;
+    }
+
+    /* GALLERY COLUMN (right) */
+    .gallery{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+      align-items:stretch;
+      position:relative;
+      width:100%;
+      height:100%;
+    }
+
+    .main-photo{
+      flex: 3 1 auto;
+      border-radius:12px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      position:relative;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      width:100%;
+    }
+
+    .thumb-row{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      flex: 2 1 auto;
+      width:100%;
+    }
+
+    .thumb{
+      height:100%;
+      border-radius:10px;
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(255,255,255,0.03);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .thumb img, .main-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .main-photo:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,0.75); }
+    .thumb:hover{ transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.6); }
+
+    @media (max-width:960px){
+      .layout{ grid-template-columns: 1fr; }
+      .gallery{ order:-1 }
+      .main-photo{ height:280px }
+      .thumb{ height:140px }
+    }
+
+    @media (max-width:420px){
+      .title{ font-size:22px }
+      .panel{ padding:20px }
+      .main-photo{ height:200px }
+      .thumb{ height:100px }
+    }
+    /* -------------------------
+  Mobile-friendly overrides
+  Paste this at the END of your existing <style> block
+   - keeps desktop exactly same
+   - fixes mobile cropping, overflow, and ordering
+------------------------- */
+
+/* Respect safe area on iPhones */
+@supports(padding: env(safe-area-inset-bottom)) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* Make small screens stack cleanly and keep gallery last */
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; gap:20px; } /* stacked */
+  /* ensure text comes first, gallery after */
+  .copy  { order: 0; }
+  .gallery { order: 1; width:100%; align-items: center; }
+
+  /* let the panel show content (avoid clipping) */
+  .panel { overflow: visible; padding: 22px; }
+
+  /* Main photo: avoid cropping heads — use contain and sensible max-height */
+  .main-photo {
+    width: 100%;
+    height: auto;
+    max-height: 44vh;         /* responsive max height so it doesn't dominate */
+    border-radius: 12px;
+    overflow: visible;
+  }
+  .main-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;   /* show full face, no crop */
+    object-position: center top;
+    display: block;
+  }
+
+  /* Thumbnails: horizontal scroll so they never get too small */
+  .thumb-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 4px 2px;
+    width: 100%;
+  }
+  .thumb {
+    flex: 0 0 46%;        /* two thumbs visible approx */
+    min-width: 46%;
+    height: auto;
+    max-height: 24vh;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* thumbnails can crop a bit but main uses contain */
+    display: block;
+  }
+
+  /* Make sure text is readable and never clipped */
+  .copy { padding-right: 0; }
+  .lead { font-size: 17px; }
+  .paragraph { font-size: 15px; line-height: 1.55; }
+
+  /* closing block spacing for mobile */
+  .closing { padding: 14px; gap: 12px; flex-direction: row; align-items: center; }
+}
+
+/* Extra small phones (prevent any side-sinking + increase tap targets) */
+@media (max-width: 430px) {
+  .page { padding: 22px 12px; }
+  .panel { padding: 18px; border-radius: 14px; }
+
+  .title { font-size: 20px; line-height: 1.1; }
+  .subtle-date { font-size: 12px; }
+
+  /* Slightly taller main image but contained */
+  .main-photo { max-height: 50vh; }
+  .main-photo img { object-fit: contain !important; }
+
+  /* make the thumbs a little larger for tapping */
+  .thumb { flex: 0 0 60%; min-width: 60%; max-height: 28vh; }
+  .thumb img { object-fit: cover; }
+
+  /* avoid clipping text inside the panel */
+  .panel, .stage, .page { overflow: visible; }
+  .paragraph { font-size: 15px; }
+
+  /* increase closing heart size so it doesn't overlap text */
+  .closing .heart { width: 60px; height: 60px; }
+  .closing .text { font-size: 15px; }
+}
+
+/* Small global safety rules so images never overflow their container */
+.main-photo img, .thumb img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* If any earlier rule set overflow:hidden on a parent, ensure visible on the path */
+.stage, .panel, .layout, .gallery { overflow: visible !important; }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="stage">
+      <section class="panel" aria-labelledby="pageTitle">
+        <header class="header">
+          <div>
+            <h1 id="pageTitle" class="title">Happy 41st Birthday, Mama</h1>
+            <div class="subtle-date">Celebrating love, time, and quiet shared moments</div>
+          </div>
+          <div style="text-align:right">
+            <div style="color:var(--muted); font-size:13px">Made with ♥</div>
+            <div style="color:var(--accent); font-weight:600; font-size:13px">Your loving child</div>
+          </div>
+        </header>
+
+        <div class="layout">
+          <article class="copy" aria-label="Birthday message">
+            <p class="lead">It’s crazy how it’s already been a year. I’ll admit I had no idea what to do this year.</p>
+            <p class="paragraph">I’ve been scrambling way worse than any year before without a clue in the world on what to do and how to make this year special for you. That’s when I realized the answer was hiding right in plain sight. I just needed a Surabhi Masi to ring the bell. You told me how much you adored watching old Hindi movies with me.</p>
+            <p class="paragraph">So this year, my gift for you is spending quality time with you. Whenever you feel up to it and whenever I’m free, we can spend time together watching your favorite nostalgic movies on the couch at home. Popcorn and nachos included. We can’t watch a movie without those, can we now?</p>
+            <p class="paragraph">Now it’s time for the sappy part of this wish that makes me cringe every year when I come back to read what I wrote last year for inspiration. I’ve realized that even though it’s just the two of us together, we barely get any time to spend together. I know how busy you get with work, how hard it is to run the house, how hard it is to move and still come back with a smile every day.</p>
+            <p class="paragraph">I truly understand some nights, some days, we can’t spend together. I might be frustrated at the time, but deep down inside, I know you’re just trying your best. And whether you’re swamped and exhausted, you’ve always made time when I need you the most. Whether I’m stressed about a grade, a test, or just nervous, you’ve always been there to console me when I need you most.</p>
+            <p class="paragraph">I want you to know I will cherish those moments of comfort and warmth forever, and I truly do appreciate how you take time whenever I need it the most.</p>
+
+            <div class="closing" aria-hidden="false">
+              <div class="heart">♥</div>
+              <div>
+                <div class="text">I love you, Mama, and I hope you enjoy your birthday to the fullest. I want you to know that I’ll always be grateful for everything you do for me — even on the days when I’m too caught up to show it. Your love stays with me, even when my words fall short.</div>
+              </div>
+            </div>
+          </article>
+
+          <aside class="gallery" aria-label="Photo gallery">
+            <figure class="main-photo" id="mainPhoto">
+              <img id="mainPhotoImg" src="https://raw.githubusercontent.com/RoyalKeyboard911/Mom-brithday/refs/heads/main/mom-vr-work.png" alt="Photo of Mama" />
+            </figure>
+
+            <div class="thumb-row">
+              <figure class="thumb"><img src="https://lh3.googleusercontent.com/fife/ALs6j_EsgcgTvee3PCOtjgp4gwsUamvCA1_haa0fpEJDY7Tq0hF6b3f5GtxqRdjNZvxCiBLvGn6J58lJabmb4Htm74_uoj4cnISsnN-S1NJBIFJ-Xn4ip25_11XY69IatXSmbPbTRUMBj0xwzOcOZUV9DbOxW9T-yOwdOfYCfkgnHVyPwjyFGvHVd-vcOKUSwpYVaK4ZPRMwLTEPhujXCUf4LQwy_ArcYT_NEp-_tA9IB2Czcgot41VvfPTqAca-yXqrnZ30Cg0T2vHsremwWq0l84lvk3qUDD8lCOZ5qUBsCUoNNghJsazZ9tRUob_CHDCHuoxPqRAD8HY_PtalQ8Us9pch_pCMT7Einf6e8w5_WiXYZ1wlstXr11ASCI3X-cN1aqmaW5ocjKpRyjRc2ZPDsRzdamraIR1Z7G5K4AaLb2hPOCMOP-bPHiwWZ43LOZDGq9C32-VS1srr1FMtF2gBi5UOtlaWXFI8usdd39feD227z56VVITlpBseDJz06pMNJDBfNGURLQbBw13CocF9Mh-Qd09sts5RGoT4_9JWGaToUnTLresbT-LKcyS1pELQ_tw9-3sj2pYo4tI7EH3j_3DQQU8WRLlstQabQ91taashBRGSVaIu9dzgzNNehLExAMRi53OpUY3fpcuZvpOcfxXHGXLNgJdY7MdYYVC1EmuZ_K990WkZqdIAVHIQ71248oCKnpqzhdSQxb65WFBthAE0-SMYCiRSXGsQNx-FzRd0m5LgPKPTvrvkgMXt-jQwZLG6diJewaBtM2zp-qvqAmeDMqSCXE9XKnYr269upTK7LMWChwcLhMkgBHrXBp0_mfNKxuGuzptKNfz9wb_Z5rteO4ePskWfNRktjFjxJHlUjlJwXwapj5zzEshZMSWp95ZykuZsdffe3QbInh9m9g2-Ojav4Eqmmyv2WeAoutmo054co_u3EMXBabEXJtfTrVkNsBq60MWlTo3c-lGlSVF4vNvi9vmLMIg_rb9RtzOrwXT9hSLzbPhgaS1g1JdbaEeLag=w1860-h880?authuser=0" alt="Memory 2" /></figure>
+              <figure class="thumb"><img src="https://github.com/RoyalKeyboard911/Picture/blob/main/Untitled%20design.png?raw=true" alt="Memory 3" /></figure>
+              <figure class="thumb"><img src="https://github.com/RoyalKeyboard911/Picture/blob/main/e29afbd0-eccc-4e5b-9a89-50affce469f1.JPG?raw=true" alt="Memory 4" /></figure>
+              <figure class="thumb"><img src="https://github.com/RoyalKeyboard911/Picture/blob/main/mom%20astro%20pic.png?raw=trues" alt="Memory 5" /></figure>
+              
+            </div>
+          </aside>
+
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
